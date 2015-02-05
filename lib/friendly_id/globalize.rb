@@ -93,7 +93,7 @@ current locale:
       #
       # @see FriendlyId::ObjectUtils
       def find_one(id)
-        return super if id.unfriendly_id?
+        return super if (id.unfriendly_id? || id.to_s == id.to_i.to_s)
         found = where(@klass.friendly_id_config.query_field => id).first
         found = includes(:translations).
                 where(translation_class.arel_table[:locale].in([I18n.locale, I18n.default_locale])).

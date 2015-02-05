@@ -88,7 +88,7 @@ method.
 
       # Search for a record in the slugs table using the specified slug.
       def find_one(id)
-        return super(id) if id.unfriendly_id?
+        return super(id) if (id.unfriendly_id? || id.to_s == id.to_i.to_s)
         where(@klass.friendly_id_config.query_field => id).first or
         with_old_friendly_id(id) {|x| find_one_without_friendly_id(x)} or
         find_one_without_friendly_id(id)
