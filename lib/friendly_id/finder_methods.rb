@@ -13,7 +13,7 @@ module FriendlyId
     #
     # @see FriendlyId::ObjectUtils
     def find_one(id)
-      return super if id.unfriendly_id?
+      return super if (id.unfriendly_id? || id.to_s == id.to_i.to_s)
       where(@klass.friendly_id_config.query_field => id).first or super
     end
 
